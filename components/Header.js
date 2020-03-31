@@ -1,0 +1,33 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import {View, Text, StyleSheet} from 'react-native';
+import { white } from 'ansi-colors';
+
+const Header = ({title}) => {
+  return (
+    <View style={styles.header}>
+      <Text style={styles.text}>
+        {title}
+      </Text>
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  header:{
+      height: 60,
+      padding: 15,
+      backgroundColor: 'darkslateblue'
+  },
+  text: {
+      color: '#fff',
+      fontSize: 23,
+      textAlign: 'center'
+  }
+})
+
+Header.defaultProps = {
+    title: 'Shopping List'
+}
+
+export default Header
