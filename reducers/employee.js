@@ -1,6 +1,7 @@
-import {GET_DRIVERS} from '../actions/constants'
+import {GET_DRIVERS, SET_DRIVER, CLEAR_SET_DRIVER} from '../actions/constants'
 
 const initialState = {
+    driver: null,
     drivers: [],
     error: {},
     loading: true
@@ -8,7 +9,8 @@ const initialState = {
 
 export default function(state = initialState, action){
     // console.log('HELLO FROM REDUCER');
-    // console.log(action);
+    console.log(action);
+    console.log(payload);
     const {type, payload} = action;
 
     switch(type){
@@ -16,6 +18,18 @@ export default function(state = initialState, action){
             return{
                 ...state,
                 drivers: payload,
+                loading: false
+            }
+        case SET_DRIVER:
+            return{
+                ...state,
+                driver: payload,
+                loading: false
+            }
+        case CLEAR_SET_DRIVER:
+            return{
+                ...state,
+                driver: null,
                 loading: false
             }
         default:

@@ -2,51 +2,20 @@ import axios from 'axios';
 import store from '../store'
 import {API_URL , GET_ORDERS, CREATE_ORDER, UPDATE_ORDER, ORDER_ERROR} from './constants'
 
-export const testFunction = async () =>{
-    // console.log('test');
+export const getOrders = async () =>{
     try {
         const t1 = await axios.get(`${API_URL}/orders`);
-        // console.log(t1.data);
 
         store.dispatch({
             type: GET_ORDERS,
             payload: t1.data
         })
         
-        // console.log('after dispatch');
     } catch (error) {
         console.error(error);
     }
 
 }
-// export const testFunction = () => async dispatch =>{
-//     console.log('HELLO WORLD!');
-//     try {
-//         const res = await axios.get(`${API_URL}/orders`);
-
-        // dispatch({
-        //     type: GET_ORDERS,
-        //     payload: res.data
-        // })
-
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
-
-// export const getOrders = () => async dispatch => {
-//     try {
-//         const res = await axios.get(`${API_URL}/orders`);
-
-//         dispatch({
-//             type: GET_ORDERS,
-//             payload: res.data
-//         })
-
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
 
 // export const createOrder = (formData, edit = false) => async dispatch => {
 //     try {
