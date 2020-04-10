@@ -4,6 +4,7 @@ import {SET_LOADING} from './constants'
 
 
 export const setLoading = (value) => {
+    console.log(`Loading: ${value}`);
     try {
         store.dispatch({
             type: SET_LOADING,

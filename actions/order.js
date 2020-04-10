@@ -2,19 +2,34 @@ import axios from 'axios';
 import store from '../store'
 import {API_URL , GET_ORDERS, CREATE_ORDER, UPDATE_ORDER, ORDER_ERROR} from './constants'
 
-export const getOrders = async () =>{
+export const getOrders = () =>{
+    console.log('getting all orders');
     try {
-        const t1 = await axios.get(`${API_URL}/orders`);
+        const t1 = axios.get(`${API_URL}/orders`);
 
-        store.dispatch({
-            type: GET_ORDERS,
-            payload: t1.data
-        })
+        // store.dispatch({
+        //     type: GET_ORDERS,
+        //     payload: t1.data
+        // })
         
     } catch (error) {
         console.error(error);
     }
 
+}
+
+export const getOrdersForDriver = async (driver) => {
+    try {
+        console.log('Getting order for driver');
+        console.log(driver);
+        const orders = await axios.get(`${API_URL}/orders/${driver._id}`);
+        store.dispatch({
+            type: GET_ORDERS,
+            payload: orders.data
+        });
+    } catch (error) {
+        console.error(error)
+    }
 }
 
 // export const createOrder = (formData, edit = false) => async dispatch => {

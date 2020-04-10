@@ -18,6 +18,7 @@ const Tasks = ({order:{loading, orders}}) => {
             <Text>https://reactnative.dev/docs/asyncstorage.html</Text>
             <Text style={styles.toDo}>Visual</Text>
             <Text>Animation loading screen on start</Text>
+            <Text>Show a no orders assigned in middle in Dash if no orders</Text>
         </View>
     )
 }

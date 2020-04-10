@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react'
+import React, {useState} from 'react'
 import {NavigationContainer, StackActions} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {View, Text, StyleSheet} from 'react-native';
@@ -15,12 +15,17 @@ import Loading from './components/Loading';
 
 
 const App = props => {
-  
+  const [loading, setLoadingValue] = useState(false);
   const Stack = createStackNavigator();
+  const tmpString = 'Hello World';
+
+  const tmpFunc = (blah) => {
+    console.log(blah)
+  }
 
   return (
     <Provider store={store}>
-      <Loading/>
+      <Loading tmpValue={loading}/>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Splash" headerMode="none">
           <Stack.Screen name="Splash" component={Splash} options={{title: 'Petalos y Arte'}}/>
@@ -32,26 +37,7 @@ const App = props => {
         <Tasks/>
       </NavigationContainer>
     </Provider>
-        // <View style={styles.container}>
-        //   <Header title='Petalos y Arte'/>
-        //   <Dashboard/>
-        //   <Tasks/>
-
-        // </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container:{
-    flex: 1,
-  },
-  toDo:{
-    fontWeight: 'bold',
-    fontSize: 25
-  },
-  taskComplete:{
-    textDecorationLine: 'line-through'
-  }
-})
 
 export default App;

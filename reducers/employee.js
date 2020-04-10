@@ -8,9 +8,7 @@ const initialState = {
 }
 
 export default function(state = initialState, action){
-    // console.log('HELLO FROM REDUCER');
-    console.log(action);
-    console.log(payload);
+    // console.log('HELLO FROM EMPLOYEE REDUCER');
     const {type, payload} = action;
 
     switch(type){

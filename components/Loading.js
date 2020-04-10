@@ -4,7 +4,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-const Loading = ({alert:{loading}}) => {
+const Loading = ({alert:{loading}, tmpValue}) => {
     return (
         <View>
             <Spinner visible={loading} textContent={'Loading...'}/>
@@ -13,7 +13,8 @@ const Loading = ({alert:{loading}}) => {
 }
 
 Loading.protoTypes = {
-    alert: PropTypes.object.isRequired
+    alert: PropTypes.object.isRequired,
+    tmpValue: PropTypes.bool.isRequired,
 }
   
 

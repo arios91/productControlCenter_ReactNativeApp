@@ -4,6 +4,7 @@ import {API_URL , GET_DRIVERS, SET_DRIVER, CLEAR_SET_DRIVER} from './constants'
 
 
 export const getDrivers = async () => {
+    console.log('Getting Drivers');
     try {
         const res = await axios.get(`${API_URL}/employees/driver`);
 
@@ -26,6 +27,7 @@ export const setDriver = (driver) => {
             type: SET_DRIVER,
             payload: driver
         })
+        console.log('done setting driver');
     } catch (error) {
         console.error(error);
     }

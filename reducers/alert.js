@@ -5,9 +5,6 @@ const initialState = {
 }
 
 export default function(state = initialState, action){
-    // console.log('HELLO FROM REDUCER');
-    console.log(action);
-    console.log(payload);
     const {type, payload} = action;
 
     switch(type){

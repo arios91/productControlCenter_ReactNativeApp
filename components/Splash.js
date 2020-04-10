@@ -4,16 +4,29 @@ import {connect} from 'react-redux';
 import {getOrders} from '../actions/order'
 import {getDrivers} from '../actions/employee';
 import {View, Text, StyleSheet, Button} from 'react-native';
+import { setLoading } from '../actions/alert';
+import { useFocusEffect } from '@react-navigation/core';
 
-const Dashboard = ({employee:{loading, drivers}, navigation}) => {
+const Splash = ({employee:{loading, drivers}, navigation}) => {
+    console.log('------------------------');
+    console.log('in splash screen');
+    console.log(loading);
+    console.log(drivers);
+    useFocusEffect(React.useCallback(() => {
+        console.log('splash screen focused');
+        return () => {
+            console.log('splash screen uncofused');
+        }
+    }))
     useEffect(() => {
         getDrivers();
-    }, [getOrders, getDrivers])
+    }, [getDrivers])
 
     if(!loading){
-        setTimeout(() => {
-            navigation.navigate('DriverSelect')
-        }, 1000);
+        navigation.replace('DriverSelect');
+        // navigation.navigate('DriverSelect')
+        // setTimeout(() => {
+        // }, 1000);
     }
 
     return (
@@ -24,10 +37,10 @@ const Dashboard = ({employee:{loading, drivers}, navigation}) => {
     )
 }
 
-Dashboard.propTypes = {
+Splash.propTypes = {
     getDrivers: PropTypes.func.isRequired,
     employee: PropTypes.object.isRequired,
-    navigation: PropTypes.object.isRequired,
+    navigation: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -35,4 +48,4 @@ const mapStateToProps = state => ({
     employee: state.employee
 })
 
-export default connect(mapStateToProps, {getDrivers})(Dashboard)
+export default connect(mapStateToProps, {getDrivers})(Splash)

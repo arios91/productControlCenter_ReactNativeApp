@@ -7,23 +7,39 @@ import {View, Text, StyleSheet, Button} from 'react-native';
 import {Picker} from '@react-native-community/picker';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useFocusEffect } from '@react-navigation/core';
 
-const DriverSelect = ({employee:{driver, loading, drivers}, navigation}) => {
+const DriverSelect = ({employee:{loading, drivers}, navigation}) => {
+    console.log('------------------------');
+    console.log('In driver select');
+    
     const [selectedDriver, setSelectedDriver] = useState(null)
 
 
-    const handleDriverChange = (tmpDriver) => {
-        setLoading(true);
-        if(tmpDriver !== null){
-            setDriver(tmpDriver);
+    // const handleDriverChange = async (tmpDriver) => {
+    //     console.log('handling driver change');
+    //     if(tmpDriver !== null){
+    //         setDriver(tmpDriver);
+    //     }else{
+    //         clearSetDriver();
+    //     }
+    //     setSelectedDriver(tmpDriver);
+    //     setLoading(false);
+    // }
+    const handleDriverChange = async (tmpDriver) => {
+        console.log('handling driver change');
+        setSelectedDriver(tmpDriver);
+    }
+    
+    const selectDriver = () => {
+        if(selectedDriver !== null){
+            setDriver(selectedDriver);
+            navigation.navigate('Dashboard');
         }else{
             clearSetDriver();
         }
-        setTimeout(() => {
-            setSelectedDriver(tmpDriver);
-            setLoading(false);
-        }, 1000)
     }
+
 
     return (
         <View>
@@ -32,11 +48,12 @@ const DriverSelect = ({employee:{driver, loading, drivers}, navigation}) => {
                 <Text>Select Drivers</Text>
                 <Picker 
                     selectedValue={selectedDriver}
-                    onValueChange={(itemValue) => handleDriverChange(itemValue)}>
+                    onValueChange={(itemValue) => {handleDriverChange(itemValue)}}>
                     <Picker.Item label="-- Select Driver --" value={null}/>
                     {drivers.map(driver => <Picker.Item key={driver._id} label={driver.name} value={driver}/>)}
                 </Picker>
-                <Button title="Continue" onPress={() => navigation.navigate('Dashboard')} disabled={selectedDriver === null}/>
+                <Button title="Continue" onPress={() => selectDriver()} disabled={selectedDriver === null}/>
+                {/* <Button title="Continue" onPress={() => navigation.navigate('Dashboard')} disabled={selectedDriver === null}/> */}
             </View>
             }
         </View>
