@@ -6,32 +6,23 @@ import {getDrivers} from '../actions/employee';
 import {View, Text, StyleSheet, Button} from 'react-native';
 import { setLoading } from '../actions/alert';
 import { useFocusEffect } from '@react-navigation/core';
-
+import Loading from './Loading'
 const Splash = ({employee:{loading, drivers}, navigation}) => {
     console.log('------------------------');
     console.log('in splash screen');
-    console.log(loading);
-    console.log(drivers);
-    useFocusEffect(React.useCallback(() => {
-        console.log('splash screen focused');
-        return () => {
-            console.log('splash screen uncofused');
-        }
-    }))
+
     useEffect(() => {
         getDrivers();
     }, [getDrivers])
 
     if(!loading){
         navigation.replace('DriverSelect');
-        // navigation.navigate('DriverSelect')
-        // setTimeout(() => {
-        // }, 1000);
     }
+
 
     return (
         <View>
-            {loading ? <Text>Loading Splash</Text>:
+            {loading ? <Loading override={true}/>:
             <Text>Splash Screen</Text>}
         </View>
     )

@@ -8,6 +8,7 @@ import {Picker} from '@react-native-community/picker';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/core';
+import Loading from './Loading'
 
 const DriverSelect = ({employee:{loading, drivers}, navigation}) => {
     console.log('------------------------');
@@ -15,17 +16,6 @@ const DriverSelect = ({employee:{loading, drivers}, navigation}) => {
     
     const [selectedDriver, setSelectedDriver] = useState(null)
 
-
-    // const handleDriverChange = async (tmpDriver) => {
-    //     console.log('handling driver change');
-    //     if(tmpDriver !== null){
-    //         setDriver(tmpDriver);
-    //     }else{
-    //         clearSetDriver();
-    //     }
-    //     setSelectedDriver(tmpDriver);
-    //     setLoading(false);
-    // }
     const handleDriverChange = async (tmpDriver) => {
         console.log('handling driver change');
         setSelectedDriver(tmpDriver);
@@ -43,7 +33,7 @@ const DriverSelect = ({employee:{loading, drivers}, navigation}) => {
 
     return (
         <View>
-            {loading ? <Text>Loading Drivers</Text>:
+            {loading ? <Loading override={true}/>:
             <View>
                 <Text>Select Drivers</Text>
                 <Picker 

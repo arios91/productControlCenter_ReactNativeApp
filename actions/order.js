@@ -1,6 +1,6 @@
 import axios from 'axios';
 import store from '../store'
-import {API_URL , GET_ORDERS, CREATE_ORDER, UPDATE_ORDER, ORDER_ERROR} from './constants'
+import {API_URL , GET_ORDERS, CREATE_ORDER, UPDATE_ORDER, ORDER_ERROR, SET_ORDER, CLEAR_ORDERS, ORDER_DELIVERED} from './constants'
 
 export const getOrders = () =>{
     console.log('getting all orders');
@@ -32,38 +32,40 @@ export const getOrdersForDriver = async (driver) => {
     }
 }
 
-// export const createOrder = (formData, edit = false) => async dispatch => {
-//     try {
-//         const config = {
-//             headers:{'Content-type': 'application/json'}
-//         };
-//         console.log(formData);
+export const setCurrentOrder = order => {
+    try {
+        store.dispatch({
+            type: SET_ORDER,
+            payload: order
+        });
+    } catch (error) {
+        console.error(error);
+    }
+}
 
-//         const res = await axios.post(`${API_URL}/orders`, formData, config);
-//         console.log(res.data);
-//         if(!edit){
-//             dispatch({
-//                 type: CREATE_ORDER,
-//                 payload: res.data
-//             })
-//         }else{
-//             dispatch({
-//                 type: UPDATE_ORDER,
-//                 payload: res.data
-//             })
-//             return 'hello world';
-//         }
+export const clearOrders = () => {
 
-//         dispatch(setAlert('Success', 'primary'));
+    try {
+        store.dispatch({type:CLEAR_ORDERS});
+    } catch (error) {
+        console.error(error);
+    }
+}
 
-//     } catch (error) {
-//         const errors = error.response.data.errors;
-//         if(errors){
-//             errors.forEach(err => dispatch(setAlert(err.msg, 'danger')));
-//         }
-//         dispatch({
-//             type: ORDER_ERROR,
-//             payload: {msg: error.response.statusText, status: error.response.status}
-//         })
-//     }
-// }
+export const markOrderAsDelivered = async order => {
+    try {
+        console.log('in update order');
+        console.log(order);
+        const config = {
+            headers:{'Content-type': 'application/json'}
+        };
+        order.status = 'delivered';
+        const res = await axios.post(`${API_URL}/orders`, order, config);
+        store.dispatch({
+            type: ORDER_DELIVERED,
+            payload: order._id
+        });
+    } catch (error) {
+        console.error(error);
+    }
+}

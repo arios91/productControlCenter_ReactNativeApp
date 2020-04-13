@@ -12,10 +12,14 @@ const Tasks = ({order:{loading, orders}}) => {
             <Text style={styles.taskComplete}>Splash Screen</Text>
             <Text style={styles.taskComplete}>Present driver list select on start</Text>
             <Text style={styles.taskComplete}>Choose a driver</Text>
+            <Text style={styles.taskComplete}>Retrieve orders for driver</Text>
+            <Text>Complete Order Details screen</Text>
+            <Text>Update Order as delivered</Text>
             <Text>Save driver to phone</Text>
-            <Text>Retrieve orders for driver</Text>
             <Text>keep logged in url</Text>
             <Text>https://reactnative.dev/docs/asyncstorage.html</Text>
+            <Text>Implement listener in web client</Text>
+            <Text>https://pusher.com/tutorials/mongodb-change-streams</Text>
             <Text style={styles.toDo}>Visual</Text>
             <Text>Animation loading screen on start</Text>
             <Text>Show a no orders assigned in middle in Dash if no orders</Text>
