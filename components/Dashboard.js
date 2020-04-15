@@ -59,6 +59,7 @@ const Dashboard = ({employee, navigation, order}) => {
             {masterLoad ? <Loading override={true}/>:
             <ScrollView
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+                {orders.length > 0 ? 
                 <View>
                     <Text>{driver.name}: {orders.length}</Text>
                     <FlatList
@@ -67,6 +68,11 @@ const Dashboard = ({employee, navigation, order}) => {
                         keyExtractor={item => item._id}
                     />
                 </View>
+                :
+                <View>
+                  <Text>No orders assigned</Text>
+                </View>
+                }
             </ScrollView>
         }
         </SafeAreaView>

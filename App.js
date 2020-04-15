@@ -36,7 +36,7 @@ const App = props => {
             <Stack.Screen name="Tasks" component={Tasks} options={{title: 'Tasks'}}/>
             <Stack.Screen name="Profile" component={Profile} options={{title: 'Profile'}}/>
           </Stack.Navigator>
-          <Tasks/>
+          {/* <Tasks/> */}
         </NavigationContainer>
       </Provider>
   )
