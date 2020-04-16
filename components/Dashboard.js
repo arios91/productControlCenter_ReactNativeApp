@@ -15,9 +15,9 @@ function Item({ order, navigation }) {
     return (
       <View style={styles.item}>
           <TouchableOpacity onPress={onPress}>
-            <Text>{order.orderNum}</Text>
-            <Text>{order.recipient}</Text>
-            <Text>{order.deliveryAddress}</Text>
+            <Text style={styles.itemDetails}>{order.orderNum}</Text>
+            <Text style={styles.itemDetails}>{order.recipient}</Text>
+            <Text style={styles.itemDetails}>{order.deliveryAddress}</Text>
           </TouchableOpacity>
       </View>
     );
@@ -45,20 +45,19 @@ const Dashboard = ({employee, navigation, order}) => {
 
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
-        setLoading(true);
 
         wait(1000).then(() => {
             getOrdersForDriver(driver);
             setRefreshing(false);
-            setLoading(false);
         });
     }, [refreshing]);
 
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={styles.container}>
             {masterLoad ? <Loading override={true}/>:
             <ScrollView
-                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+              contentContainerStyle={styles.scrollViewContainer}
+              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                 {orders.length > 0 ? 
                 <View>
                     <Text>{driver.name}: {orders.length}</Text>
@@ -69,8 +68,8 @@ const Dashboard = ({employee, navigation, order}) => {
                     />
                 </View>
                 :
-                <View>
-                  <Text>No orders assigned</Text>
+                <View style={styles.noItemsContainer}>
+                  <Text style={styles.noItems}>No orders assigned</Text>
                 </View>
                 }
             </ScrollView>
@@ -82,26 +81,34 @@ const Dashboard = ({employee, navigation, order}) => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      marginHorizontal: 16
+    },
+    scrollViewContainer:{
+      flex: 1,
+      backgroundColor: 'black',
+    },
+    noItemsContainer:{
+      flex: 1,
+      justifyContent: 'center'
+    },
+    noItems:{
+      color: '#fff',
+      alignSelf: 'center',
+      fontSize: 30
     },
     item: {
-      backgroundColor: "#f9c2ff",
-      padding: 20,
-      marginVertical: 8
+      backgroundColor: "#252525",
+      width: '90%',
+      alignSelf: 'center',
+      padding: 10,
+      overflow: 'hidden',
+      borderRadius: 16,
+      marginVertical: 10
+
     },
-    header: {
-      fontSize: 32,
-      backgroundColor: "#fff"
-    },
-    title: {
-      fontSize: 24
-    },
-    scrollView: {
-        flex: 1,
-        backgroundColor: 'pink',
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
+    itemDetails:{
+      color: 'white',
+      fontSize: 17
+    }
   });
   
 

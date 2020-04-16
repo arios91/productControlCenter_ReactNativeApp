@@ -47,10 +47,10 @@ const DriverSelect = ({employee:{loading, drivers}, navigation}) => {
 
 
     return (
-        <SafeAreaView style={styles.container1}>
+        <SafeAreaView style={styles.container}>
             {loading ? <Loading override={true}/>:
             <ScrollView 
-                contentContainerStyle={styles.container2}
+                contentContainerStyle={styles.scrollViewContainer}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                     <Picker
                         style={styles.picker}
@@ -78,11 +78,10 @@ const DriverSelect = ({employee:{loading, drivers}, navigation}) => {
 }
 
 const styles = StyleSheet.create({
-    container1:{
-        flex: 1,
-        backgroundColor: 'powderblue'
+    container:{
+        flex: 1
     },
-    container2:{
+    scrollViewContainer:{
         flex: 1,
         justifyContent: 'space-around',
         backgroundColor: 'black',

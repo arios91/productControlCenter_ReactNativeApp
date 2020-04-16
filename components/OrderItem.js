@@ -2,9 +2,11 @@ import React, {useEffect} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux';
 import {markOrderAsDelivered} from '../actions/order'
-import {View, Text, StyleSheet, Button, Linking, TouchableHighlight} from 'react-native';
+import {View, Text, StyleSheet, Linking, TouchableHighlight} from 'react-native';
 import { showLocation } from 'react-native-map-link'
+import Button from 'react-native-button';
 import Loading from './Loading';
+import { white } from 'color-name';
 
 const OrderItem = ({employee, order, navigation}) => {
     console.log('------------------------');
@@ -14,16 +16,28 @@ const OrderItem = ({employee, order, navigation}) => {
 
     const masterLoad = employee.loading && order.loading;
 
+    const addressArr = currentOrder.deliveryAddress.split(',');
+    addressArr.pop();
+
     const callPhone = () => {
-        console.log('calling');
         Linking.openURL(`tel:${currentOrder.deliveryPhone}`);
+    }
+    const callCustomerPhone = () => {
+        Linking.openURL(`tel:${currentOrder.customerPhone}`);
     }
 
     const markDelivered = () => {
         console.log('delivered');
-        markOrderAsDelivered(currentOrder);
-        navigation.navigate('Dashboard');
+        // markOrderAsDelivered(currentOrder);
+        // navigation.navigate('Dashboard');
     }
+
+
+    const testPress = () => {
+        console.log('test press');
+    }
+
+
 
     const openNavigation = () => {
         showLocation({
@@ -42,24 +56,93 @@ const OrderItem = ({employee, order, navigation}) => {
         })
     }
 
-    return (
-        <View>
-            {masterLoad ? <Loading override={true}/>:
-            <View>
-                <Text>{currentOrder.recipient}</Text>
-                <TouchableHighlight onPress={callPhone}>
-                    <Text>{currentOrder.deliveryPhone}</Text>
-                </TouchableHighlight>
-                <TouchableHighlight onPress={openNavigation}>
-                    <Text>{currentOrder.deliveryAddress}</Text>
-                </TouchableHighlight>
-                <Text>{currentOrder.description}</Text>
-                <Button onPress={markDelivered} title='Confirm Delivery'/>
+    return masterLoad ? <View style={styles.container}><Loading override={true}/></View>:(
+        <View style={styles.container}>
+            <View style={styles.outerContainer}>
+                <View>
+                    <View style={styles.subSection}>
+                        <Text style={styles.text, styles.customerName}>{currentOrder.recipient}</Text>
+                        <Text style={styles.text} onPress={callPhone}>{currentOrder.deliveryPhone}</Text>
+                        <Text style={styles.text} onPress={openNavigation}>{addressArr.toString()}</Text>
+                    </View>
+
+                    <View style={styles.subSection}>
+                        <Text style={styles.subHeader}>Description</Text>
+                        <Text style={styles.text}>{currentOrder.description}</Text>
+                    </View>
+
+                    {currentOrder.specialInstructions ? 
+                        <View style={styles.subSection}>
+                            <Text style={styles.subHeader}>Special Instructions</Text>
+                            <Text style={styles.text}>{currentOrder.specialInstructions}</Text>
+                        </View>
+                    : null}
+
+                    <View>
+                        <Text style={styles.subHeader}>Customer</Text>
+                        <Text style={styles.text} onPress={callCustomerPhone}>{currentOrder.customer} - {currentOrder.customerPhone}</Text>
+                    </View>
+                </View>
+                <View>
+                    <Button 
+                        style={styles.confirmButton}
+                        onPress={markDelivered}>
+                        Confirm Delivery
+                    </Button>
+                </View>
             </View>
-            }
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex: 1,
+        backgroundColor: '#000',
+        padding: 20
+    },
+    outerContainer:{
+        flex: 1,
+        backgroundColor: '#252525',
+        justifyContent: 'space-between',
+        borderRadius: 16,
+        padding: 20
+    },
+    innerContainer:{
+        flex: 1,
+    },
+    subSection:{
+        marginBottom: 20
+    },
+    text:{
+        color: 'white',
+        fontSize: 15,
+        marginBottom: 5,
+        alignSelf: 'center'
+    },
+    customerName:{
+        color: 'white',
+        fontSize: 40,
+        textDecorationLine: 'underline',
+        alignSelf: 'center'
+    },
+    subHeader:{
+        color: 'white',
+        fontSize: 25,
+        alignSelf: 'center',
+        textDecorationLine: 'underline',
+    },
+    confirmButton:{
+        padding:10, 
+        height:45, 
+        overflow:'hidden', 
+        borderRadius:16, 
+        width: '100%', 
+        alignSelf: 'center',
+        backgroundColor: '#007bff',
+        color: 'white'
+    }
+})
 
 OrderItem.propTypes = {
     navigation: PropTypes.object.isRequired,
