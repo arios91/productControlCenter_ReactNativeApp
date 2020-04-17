@@ -67,7 +67,7 @@ export const markOrderAsDelivered = async order => {
         if(order.bloomOrder){
             order.status = 'needsConfirmation';
         }else{
-            order.status = 'delivered';
+            order.status = 'complete';
         }
         const res = await axios.post(`${API_URL}/orders`, order, config);
         store.dispatch({
