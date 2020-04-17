@@ -41,7 +41,7 @@ const Dashboard = ({employee, navigation, order}) => {
 
     const [refreshing, setRefreshing] = useState(false)
     const masterLoad = employee.loading && order.loading;
-    
+
 
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);

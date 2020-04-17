@@ -23,9 +23,14 @@ export const getOrdersForDriver = async (driver) => {
         console.log('Getting order for driver');
         console.log(driver);
         const orders = await axios.get(`${API_URL}/orders/${driver._id}`);
+        const data = orders.data;
+        data.sort((a,b) => (a.distanceFromShop >= b.distanceFromShop) ? 1 : -1 );
+
+        //sort orders 
+
         store.dispatch({
             type: GET_ORDERS,
-            payload: orders.data
+            payload: data
         });
     } catch (error) {
         console.error(error)
@@ -59,7 +64,11 @@ export const markOrderAsDelivered = async order => {
         const config = {
             headers:{'Content-type': 'application/json'}
         };
-        order.status = 'delivered';
+        if(order.bloomOrder){
+            order.status = 'needsConfirmation';
+        }else{
+            order.status = 'delivered';
+        }
         const res = await axios.post(`${API_URL}/orders`, order, config);
         store.dispatch({
             type: ORDER_DELIVERED,
